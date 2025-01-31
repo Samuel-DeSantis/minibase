@@ -1,6 +1,7 @@
 import sqlite3
 
 from .record import Record
+from .utils import singularize
 
 class Table:
 
@@ -71,10 +72,19 @@ class Table:
     def filter(self, column, value):
         return [val for val in self.read if val[column] == value]
 
-    def join(self, table1, table2):
-        table1 = {item[0]: item for item in table1}
-        table2 = {item[0]: item for item in table2}
-        return [(join[0], table1[join[1]], table2[join[2]]) for join in self.read]
+    def join(self, obj):
+        selector_arr = []
+        join_arr = []
+
+        try:
+            for key in obj.keys():
+                join_arr.append(f'JOIN {key} ON {self.name}.{singularize(key)}_id = {key}.id')
+                for value in obj[key]:
+                    selector_arr.append(f'{key}.{value}')
+            sql: str = f"SELECT {', '.join(selector_arr)} FROM {self.name} {' '.join(join_arr)}"
+            return self.connection.cursor().execute(sql).fetchall()
+        except sqlite3.Error as e:
+            print(e)
 
     @property
     def record(self):

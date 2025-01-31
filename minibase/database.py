@@ -1,7 +1,7 @@
 import sqlite3
 import os
 
-from models.table import Table
+from .table import Table
 
 class Database:
 

@@ -1,6 +1,6 @@
 # import sqlite3
 import code
-from database import Database
+# from .database import Database
 
 def ex(db):
     # Create Table
