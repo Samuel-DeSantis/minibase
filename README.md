@@ -30,7 +30,8 @@ Minibase is licensed under MIT License.
 3. Documentation
 
 ## Installation
-`pip install minibase`
+minibase currently in testing on TestPyPi.
+`pip install -i https://test.pypi.org/simple/ minibase`
 
 ## Usage
 The philosophy for the design of this library is subject based method chaining. This allows for a logical flow for the user and may be compared to a Supabase style of database interaction.
@@ -39,7 +40,8 @@ The philosophy for the design of this library is subject based method chaining. 
 
 ### Initialize Database:
 ```
-db = Database()
+import minibase
+db = minibase.Database()
 ```
 
 The database default name will be 'sqlite3.db', but can be renamed by providing any string.
@@ -113,10 +115,13 @@ Filters specified column by given value. Column position is required to be an in
 db.table('users').filter(<column position>, <value>)
 ```
 
-### WIP - Join
-The join method is meant to populate join tables with the respective objects of reference. Replacing the primary keys with a tuple of the actual object.
+### Join
+The join method is meant to populate join tables with the respective objects of reference. Replacing the primary keys with a tuple of the actual object. Below, 'user_projects' represents a table with user_id and project_id columns.
 ```
-db.table('users').join()
+db.table('user_projects').join({
+    'users': ['first_name', 'last_name', 'username'],
+    'projects': ['name'],
+})
 ```
 
 ## Records
