@@ -2,13 +2,13 @@ import sqlite3
 
 class Record:
 
-    def __init__(self, connection, table):
-            self.connection = connection
+    def __init__(self, connection: sqlite3.Connection, table):
+            self.connection: sqlite3.Connection = connection
             self.table = table
 
     def create(self, record: list):
-        columns = self.table.columns[1:]
-        sql = f'''INSERT INTO {self.table.name} ({', '.join(columns).rstrip(', ')}) VALUES({('?,' * len(columns)).rstrip(', ')})'''
+        columns: list = self.table.columns()[1:]
+        sql: str = f'''INSERT INTO {self.table.name} ({', '.join(columns).rstrip(', ')}) VALUES({('?,' * len(columns)).rstrip(', ')})'''
         try:
             cursor = self.connection.cursor()
             cursor.execute(sql, record)
@@ -23,7 +23,7 @@ class Record:
         try:
             cursor = self.connection.cursor()
             cursor.execute(f'SELECT * FROM {self.table.name} WHERE id = ?', str(id))
-            rows = cursor.fetchone()
+            rows:tuple = cursor.fetchone()
             print(f'=> table="{self.table.name}", record={rows}\n')
             return rows
         except sqlite3.Error as e:
@@ -40,7 +40,7 @@ class Record:
             print(e)
 
     def delete(self, id: int):
-        sql = f'''DELETE FROM {self.table.name} WHERE id = ?'''
+        sql: str = f'''DELETE FROM {self.table.name} WHERE id = ?'''
         try:
             cursor = self.connection.cursor()
             cursor.execute(sql, (str(id),))

@@ -5,18 +5,18 @@ from .utils import singularize
 
 class Table:
 
-    def __init__(self, connection, name: str):
-        self.connection = connection
-        self.name = name
+    def __init__(self, connection: sqlite3.Connection, name: str):
+        self.connection: sqlite3.Connection = connection
+        self.name: str = name
 
     def create(self, columns: list):
-        columns_str = ''
+        columns_str: str = ''
         for column in columns:
             columns_str += f'{column[0]} {column[1]}, '         
         sql: str = f'''CREATE TABLE IF NOT EXISTS {self.name} (
             id integer PRIMARY KEY, 
             {columns_str.rstrip(', ')}
-        )'''
+        )''' # May want to replace string with list and use join
         try:
             cursor = self.connection.cursor()
             cursor.execute(sql)
@@ -24,14 +24,13 @@ class Table:
         except sqlite3.Error as e:
             print(e)
 
-    @property
     def list(self) -> list:
-        tables = self.connection.execute("SELECT name FROM sqlite_master WHERE type='table';")
+        sql:str = "SELECT name FROM sqlite_master WHERE type='table';"
+        tables = self.connection.execute(sql)
         table_arr = [table[0] for table in tables.fetchall()]
         print(f'=> tables={table_arr}\n')
         return table_arr
 
-    @property
     def columns(self) -> list:
         try:
             cursor = self.connection.cursor()
@@ -44,7 +43,6 @@ class Table:
             print(e)
             return []
         
-    @property
     def read(self) -> list:
         try:
             cursor = self.connection.cursor()
@@ -59,7 +57,6 @@ class Table:
             print(e)
             return []
 
-    @property
     def drop(self) -> None:
         sql: str = f'DROP TABLE IF EXISTS {self.name}'
         try:

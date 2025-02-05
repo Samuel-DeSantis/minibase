@@ -20,15 +20,13 @@ class Database:
             print(e)
             return None
     
-    @property
     def disconnect(self) -> None:
         self.connection.close()
         print('=> database disconnected')
         return None
     
-    @property
-    def delete(self) -> None:
-        if input(f'Type the name of the file to proceed ("{self.name}.db"): ') == f"{self.name}.db":
+    def delete(self, db_file: str) -> None:
+        if db_file == f"{self.name}.db":
             self.disconnect
             os.remove(f'{self.name}.db')
         print('=> database deleted')

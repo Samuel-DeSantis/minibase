@@ -27,11 +27,14 @@ Minibase is licensed under MIT License.
         2. [Read](#read)
         3. [Update](#update)
         4. [Delete](#delete)
-3. Documentation
+3. [Example](#example)
+4. [Documentation](#documentation)
 
 ## Installation
 minibase currently in testing on TestPyPi.
-`pip install -i https://test.pypi.org/simple/ minibase`
+```
+pip install -i https://test.pypi.org/simple/ minibase
+```
 
 ## Usage
 The philosophy for the design of this library is subject based method chaining. This allows for a logical flow for the user and may be compared to a Supabase style of database interaction.
@@ -53,13 +56,13 @@ db = Database('CompanyUsers')
 ### Disconnect Database:
 Disconnect from the database when operations are complete, not necessary, but good practice.
 ```
-db.disconnect
+db.disconnect()
 ```
 
 ### Delete Database:
 Delete an existing database file. Required to type the name of the database before the deletion is executed.
 ```
-db.delete
+db.delete()
 ```
 
 ### SQL:
@@ -85,28 +88,28 @@ db.table('users').create(
 ### Read Records:
 Returns a list of all table records.
 ```
-db.table('users').read
+db.table('users').read()
 > [<record_1>, <record_2>, <record_3>,]
 ```
 
 ### List Tables:
 Returns a list of all tables in the respective database.
 ```
-db.table().list
+db.table().list()
 > ['users',]
 ```
 
 ### List Columns:
 Returns a list of all columns in the respective table.
 ```
-db.table('users').columns
+db.table('users').columns()
 > ['name', 'level', 'title']
 ```
 
 ### Drop Table:
 Drops the specified table.
 ```
-db.table('users').drop
+db.table('users').drop()
 ```
 
 ### Filter
@@ -149,6 +152,42 @@ db.table('users').record.update(
 ### Delete:
 ```
 db.table('users').record.delete(id=5)
+```
+
+## Example
+Below is an example of how to use minibase in an application.
+```
+import minibase
+
+# Create and connect to'sqlite3.db'
+db = minibase.Database() 
+
+# Create users table with name:text and age:integer attributes
+db.table('users').create(columns=[
+    ['name', 'text'],
+    ['age', 'integer']
+])
+
+# Create 3 new user records
+db.table('users').record.create(['Michael Scott', 59])
+db.table('users').record.create(['Dwight Schrute', 55])
+db.table('users').record.create(['Andy Bernard', 41])
+
+# Read users table
+db.table('users').read()
+
+# Update user record
+db.table('users').record.update(
+    id=1, 
+    attributes=['name'], 
+    record=['Michael Scarn']
+)
+
+# Delete user record
+db.table('users').record.delete(id=3)
+
+# Read users table
+db.table('users').read()
 ```
 
 ## Documentation
