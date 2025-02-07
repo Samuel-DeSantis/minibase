@@ -42,6 +42,7 @@ The philosophy for the design of this library is subject based method chaining. 
 ## Database
 
 ### Initialize Database:
+See [configuration](#configuration) documentation for additional options.
 ```
 import minibase
 db = minibase.Database()
@@ -89,21 +90,21 @@ db.table('users').create(
 Returns a list of all table records.
 ```
 db.table('users').read()
-> [<record_1>, <record_2>, <record_3>,]
+> {'users': [<record_1>, <record_2>, <record_3>,]}
 ```
 
 ### List Tables:
 Returns a list of all tables in the respective database.
 ```
 db.table().list()
-> ['users',]
+> {'tables': ['users',]}
 ```
 
 ### List Columns:
 Returns a list of all columns in the respective table.
 ```
 db.table('users').columns()
-> ['name', 'level', 'title']
+> {'columns': ['name', 'level', 'title']}
 ```
 
 ### Drop Table:
@@ -138,6 +139,7 @@ db.table('users').record.create(['John Doe', 2, 'Engineer'])
 ### Read:
 ```
 db.table('users').record.read(id=1)
+> {'user': <record>}
 ```
 
 ### Update:
@@ -191,6 +193,23 @@ db.table('users').read()
 ```
 
 ## Documentation
+
+### Configuration
+Sets configuration values for the database.
+
+```
+Configuration for Database
+
+Attributes:
+	db_file: str = 'sqlite3'
+		Sets the name for the db.file to be accessed or created.
+	
+	cli_logger: bool = False
+		Enables logging for the CLI.
+
+	return_dict: bool = True
+		Returns data in dictionary format.
+```
 
 ### Database
 A class used to represent a Database connection.
