@@ -1,6 +1,6 @@
 import code
 import os
-from database import Database
+from minibase.database import Database
 
 def test_create_table(db):
     print('Creating table...')
