@@ -116,7 +116,7 @@ db.table('users').drop()
 ### Filter
 Filters specified column by given value. Column position is required to be an integer value (ex. [0]=Primary Key, [1]='name', [2]='level, etc.).
 ```
-db.table('users').filter(<column position>, <value>)
+db.table('users').filter({'name': 'John'})
 ```
 
 ### Join
@@ -126,6 +126,7 @@ db.table('user_projects').join({
     'users': ['first_name', 'last_name', 'username'],
     'projects': ['name'],
 })
+> {'user_projects': [<record_1>, <record_2>, <record_3>,]}
 ```
 
 ## Records
