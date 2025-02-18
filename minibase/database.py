@@ -16,10 +16,10 @@ class Database(Configuration):
     def disconnect(self) -> None:
         self.connection.close()
     
-    def delete(self, db_file: str) -> None:
-        if db_file == f"{self.name}.db":
+    def delete(self, file: str) -> None:
+        if file == self.db_file:
             self.disconnect
-            os.remove(f'{self.name}.db')
+            os.remove(f'{self.db_file}.db')
     
     def SQL(self, sql: str):
         cursor = self.connection.cursor()
@@ -27,11 +27,8 @@ class Database(Configuration):
         if 'INSERT' in sql:
             self.connection.commit()
             return cursor.lastrowid
-        elif 'WHERE' in sql:
-            return cursor.fetchone()
-        elif 'SELECT' in sql:
+        else:
             return cursor.fetchall()
-        return None
         
     def table(self, name: str = None) -> Table:
         return Table(db=self, name=name)
