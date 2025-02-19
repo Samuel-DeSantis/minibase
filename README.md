@@ -157,7 +157,10 @@ db.table('users').record.update(
 db.table('users').record.delete(id=5)
 ```
 
-## Example
+## Examples
+
+See here for an example using minibase with a simple flask web app: [Minibase Flask Example](https://github.com/Samuel-DeSantis/minibase-flask-example)
+
 Below is an example of how to use minibase in an application.
 ```
 import minibase
