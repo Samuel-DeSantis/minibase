@@ -1,15 +1,29 @@
 def singularize(word):
-	if 'ies' in word:
+	irregular_plurals = {
+        'people': 'person',
+        'men': 'man',
+        'children': 'child',
+        'teeth': 'tooth',
+        'feet': 'foot',
+        'mice': 'mouse',
+        'geese': 'goose',
+        'data': 'datum'
+    }
+
+	if word.lower() in irregular_plurals:
+		return irregular_plurals[word.lower()]
+
+	# Rules for regular plurals
+	if word.lower().endswith('ies'):
 		return word[:-3] + 'y'
-	elif 'es' in word:
-		return word[:-2]
-	else:
+	elif word.lower().endswith('es'):
+		if word.lower().endswith('sses') or word.lower().endswith('ches') or word.lower().endswith('shes') or word.lower().endswith('xes'):
+			return word[:-2]
+		elif word.lower().endswith('ves'):
+			return word[:-3] + 'f'
+		else:
+			return word[:-1]
+	elif word.lower().endswith('s'):
 		return word[:-1]
-	
-def pluralize(word):
-	if word[-1] == 'y' and word[-2] not in 'aeiou':
-		return word[:-1] + 'ies'
-	elif word[-1] in 'sxz' or word[-2:] in ['sh', 'ch']:
-		return word + 'es'
 	else:
-		return word + 's'
+		return word  # Word is already singular

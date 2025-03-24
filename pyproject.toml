@@ -4,13 +4,13 @@ build-backend = "hatchling.build"
 
 [project]
 name = "minibase"
-version = "0.2.0"
+version = "0.3.0"
 authors = [
   { name="Samuel DeSantis", email="minibase.py@gmail.com" },
 ]
 description = "A simple SQLite database wrapper."
 readme = "README.md"
-requires-python = ">=3.6"
+requires-python = ">=3.10"
 classifiers = [
     "Programming Language :: Python :: 3",
     "Operating System :: OS Independent",
